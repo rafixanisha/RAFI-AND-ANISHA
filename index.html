@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Rafi & Anisha | Forever</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #1a0d20;
+      color: #fff;
+      overflow-x: hidden;
+    }
+
+    .centered {
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      text-align: center;
+      padding: 2rem;
+    }
+
+    h1 {
+      font-size: 3rem;
+      background: linear-gradient(to right, #ff9edf, #c586ff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: fadeGlow 2s infinite alternate;
+    }
+
+    @keyframes fadeGlow {
+      from { text-shadow: 0 0 10px #ffb3ec; }
+      to { text-shadow: 0 0 20px #ff6fe7; }
+    }
+
+    .message {
+      font-size: 1.3rem;
+      margin-top: 15px;
+      color: #f0e6ff;
+      font-style: italic;
+      text-shadow: 0 0 8px #d484ff;
+    }
+
+    .image-container {
+      margin: 30px 0;
+    }
+
+    .image-container img {
+      width: 250px;
+      max-width: 90%;
+      border-radius: 20px;
+      box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
+    }
+
+    .section {
+      padding: 60px 20px;
+      text-align: center;
+      margin: 20px;
+      background-color: #261532;
+      border-radius: 20px;
+      box-shadow: 0 0 20px rgba(255, 255, 255, 0.05);
+    }
+
+    .section h2 {
+      font-size: 2rem;
+      color: #ffb3ec;
+      margin-bottom: 20px;
+    }
+
+    .section p {
+      font-size: 1.2rem;
+      color: #e8d1ff;
+    }
+
+    .pickup-lines {
+      font-size: 1.2rem;
+      color: #ffd9f5;
+      font-style: italic;
+      min-height: 60px;
+    }
+
+    .highlight {
+      color: #ffaae8;
+      font-weight: bold;
+      text-shadow: 0 0 10px #cc77ff;
+    }
+
+    .animated-chunks span {
+      display: inline-block;
+      font-size: 2rem;
+      margin: 0 5px;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: chunkIn 0.5s forwards;
+    }
+
+    .animated-chunks span:nth-child(1) { animation-delay: 0.1s; }
+    .animated-chunks span:nth-child(2) { animation-delay: 0.3s; }
+    .animated-chunks span:nth-child(3) { animation-delay: 0.5s; }
+    .animated-chunks span:nth-child(4) { animation-delay: 0.7s; }
+
+    @keyframes chunkIn {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .footer {
+      text-align: center;
+      padding: 15px;
+      font-size: 1rem;
+      background: #1a0d20;
+      color: #aaa;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      h1 {
+        font-size: 2.2rem;
+      }
+      .section {
+        padding: 40px 15px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="centered">
+    <h1>💖 RAFI & ANISHA 💖</h1>
+    <div class="message">Inshā’Allāh, I will get her as my wife one day</div>
+    <div class="image-container">
+      <img src="love.png" alt="Love Picture" />
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>💍 Future Vision</h2>
+    <p>I will marry her and we will have 2 cute children together 💑👶</p>
+    <p class="highlight">LOVERS FOREVER</p>
+  </div>
+
+  <div class="section">
+    <h2>✨ Pickup Lines for <span class="highlight">Anisha</span></h2>
+    <div class="pickup-lines" id="pickupText"></div>
+  </div>
+
+  <div class="section">
+    <h2 class="animated-chunks">
+      <span>R</span><span>A</span><span>F</span><span>I</span> 💘 <span>A</span><span>N</span><span>I</span><span>S</span><span>H</span><span>A</span>
+    </h2>
+    <p>Two souls, one heart — bound by destiny, written in stars 💕</p>
+  </div>
+
+  <div class="section">
+    <h2>📖 Our Story</h2>
+    <p>From strangers to best friends, from best friends to soulmates.</p>
+    <p>Every message, every smile, every memory — Rafi holds it close.</p>
+  </div>
+
+  <div class="section">
+    <h2>📷 Memories Together</h2>
+    <p>[You can add more photos here later to keep it personal 💫]</p>
+  </div>
+
+  <div class="section">
+    <h2>💌 A Promise</h2>
+    <p>No matter what happens, Rafi will always choose Anisha.</p>
+    <p>In this life and, if possible, in every life after ❤️</p>
+  </div>
+
+  <div class="footer">
+    Forever Yours,<br>Rafi
+  </div>
+
+  <script>
+    // Typewriter effect for pickup lines
+    const pickupLines = [
+      "Are you made of stars? Because you light up Rafi’s world 💫",
+      "Even if the sky falls, Rafi will catch you, Anisha ❤️",
+      "If loving you was a job, Rafi would be the most dedicated employee 🥰",
+      "Every moment with you, Anisha, is a heartbeat Rafi never wants to miss 💗"
+    ];
+
+    let lineIndex = 0;
+    let charIndex = 0;
+    const pickupText = document.getElementById("pickupText");
+
+    function typeLine() {
+      if (charIndex < pickupLines[lineIndex].length) {
+        pickupText.innerHTML += pickupLines[lineIndex].charAt(charIndex);
+        charIndex++;
+        setTimeout(typeLine, 60);
+      } else {
+        setTimeout(() => {
+          pickupText.innerHTML = "";
+          charIndex = 0;
+          lineIndex = (lineIndex + 1) % pickupLines.length;
+          typeLine();
+        }, 2500);
+      }
+    }
+
+    typeLine();
+  </script>
+
+</body>
+</html>
