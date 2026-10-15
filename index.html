@@ -28,7 +28,6 @@
         radial-gradient(ellipse at 50% -10%, #4a1747 0%, transparent 60%),
         radial-gradient(ellipse at 90% 80%, #3a0f2c 0%, transparent 50%),
         var(--night);
-      background-attachment: fixed;
       overflow-x: hidden;
     }
 
@@ -51,13 +50,13 @@
       font-size: clamp(3.2rem, 13vw, 8rem);
       line-height: 1.05;
       color: var(--blush);
-      text-shadow: 0 0 24px rgba(255, 143, 184, .55), 0 0 60px rgba(255, 143, 184, .3);
+      text-shadow: 0 0 18px rgba(255, 143, 184, .5);
     }
     .names .amp { color: var(--gold); display: inline-block; animation: beat 1.8s ease-in-out infinite; }
-    .names .n { display: inline-block; opacity: 0; filter: blur(12px); transform: translateY(20px); animation: nameIn 1.4s .3s forwards; }
-    .names .amp + .n { animation-delay: 1s; }
+    .names .n { display: inline-block; opacity: 0; transform: translateY(16px); animation: nameIn 1s .2s forwards; }
+    .names .amp + .n { animation-delay: .7s; }
 
-    @keyframes nameIn { to { opacity: 1; filter: blur(0); transform: none; } }
+    @keyframes nameIn { to { opacity: 1; transform: none; } }
     @keyframes beat { 0%, 100% { transform: scale(1); } 15% { transform: scale(1.25); } 30% { transform: scale(1); } 45% { transform: scale(1.18); } }
 
     .message {
@@ -106,11 +105,9 @@
       margin: 2.2rem auto;
       padding: 2.6rem 1.6rem;
       text-align: center;
-      background: linear-gradient(160deg, rgba(255, 255, 255, .08), rgba(255, 255, 255, .02));
+      background: rgba(42, 16, 48, .72);
       border: 1px solid rgba(255, 217, 230, .18);
       border-radius: 28px;
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
     }
     .section h2 {
       font-family: "Great Vibes", cursive;
@@ -136,16 +133,9 @@
     .pickup-lines::after { content: "|"; color: var(--rose); animation: blink 1s steps(1) infinite; margin-left: 2px; }
     @keyframes blink { 50% { opacity: 0; } }
 
-    /* R A F I 💘 A N I S H A: letters pop in one by one */
-    .section h2.letters { font-size: clamp(2.6rem, 10vw, 4rem); }
-    .letters span { display: inline-block; opacity: 0; transform: translateY(24px) rotate(-8deg); }
-    .letters .gap { width: .5em; }
-    .in .letters span { animation: pop .6s cubic-bezier(.3, 1.6, .5, 1) forwards; animation-delay: calc(var(--i) * .12s); }
-    @keyframes pop { to { opacity: 1; transform: none; } }
-
-    .gallery { display: grid; grid-template-columns: repeat(3, 1fr); gap: .7rem; margin-top: 1.2rem; }
+    .gallery { display: grid; grid-template-columns: repeat(2, 1fr); gap: .8rem; margin-top: 1.4rem; }
     .gallery div {
-      aspect-ratio: 1; border-radius: 16px; display: grid; place-items: center; font-size: 1.8rem;
+      aspect-ratio: 4 / 5; border-radius: 16px; overflow: hidden; display: grid; place-items: center; font-size: 1.8rem;
       border: 1px dashed rgba(255, 217, 230, .35);
       background: rgba(255, 143, 184, .07);
     }
@@ -156,6 +146,12 @@
     /* Hearts that burst where you tap */
     .burst { position: fixed; z-index: 5; pointer-events: none; font-size: 1.4rem; animation: burst 1.4s ease-out forwards; }
     @keyframes burst { to { transform: translate(var(--dx), var(--dy)) scale(.4); opacity: 0; } }
+
+    @media (min-width: 900px) {
+      .section { width: calc(100% - 6rem); max-width: none; padding: 3.4rem 3rem; }
+      .section p { font-size: 1.45rem; }
+      .gallery { grid-template-columns: repeat(4, 1fr); gap: 1.2rem; }
+    }
 
     @media (prefers-reduced-motion: reduce) {
       *, *::before, *::after { animation-duration: .01s !important; animation-delay: 0s !important; transition-duration: .01s !important; }
@@ -192,8 +188,8 @@
     </section>
 
     <section class="section reveal">
-      <h2 class="letters" id="letters" aria-label="Rafi and Anisha"></h2>
-      <p>Two souls, one heart, bound by destiny, written in stars 💕</p>
+      <h2>Rafi 💘 Anisha</h2>
+      <p>Two souls, one heart 💕</p>
     </section>
 
     <section class="section reveal">
@@ -204,9 +200,12 @@
 
     <section class="section reveal">
       <h2>Memories Together 📷</h2>
-      <p>Add more photos here later to keep it personal 💫</p>
-      <!-- To add a photo, replace a <div>💗</div> with: <img src="photo1.jpg" alt="Our memory"> -->
-      <div class="gallery"><div>💗</div><div>💗</div><div>💗</div></div>
+            <div class="gallery">
+        <div><img src="anu1.png" alt="Anisha" loading="lazy" onerror="this.outerHTML='💗'"></div>
+        <div><img src="anuxrafu2.png" alt="Anisha and Rafi" loading="lazy" onerror="this.outerHTML='💗'"></div>
+        <div><img src="aru4.png" alt="Rafi" loading="lazy" onerror="this.outerHTML='💗'"></div>
+        <div><img src="anuxaru3.png" alt="Anisha and Rafi" loading="lazy" onerror="this.outerHTML='💗'"></div>
+      </div>
     </section>
 
     <section class="section reveal">
@@ -225,16 +224,7 @@
     }, { threshold: 0.25 });
     document.querySelectorAll(".reveal").forEach(el => io.observe(el));
 
-    // 2. Build the letters R A F I 💘 A N I S H A (each gets a delay number --i)
-    const lettersEl = document.getElementById("letters");
-    Array.from("RAFI 💘 ANISHA").forEach((ch, i) => {
-      const s = document.createElement("span");
-      if (ch === " ") s.className = "gap"; else s.textContent = ch;
-      s.style.setProperty("--i", i);
-      lettersEl.appendChild(s);
-    });
-
-    // 3. Typewriter for pickup lines
+    // 2. Typewriter for pickup lines
     const lines = [
       "Are you made of stars? Because you light up Rafi’s world 💫",
       "Even if the sky falls, Rafi will catch you, Anisha ❤️",
@@ -254,14 +244,14 @@
     }
     type();
 
-    // 4. Falling petals drawn on a <canvas>
+    // 3. Falling petals drawn on a <canvas>
     const cv = document.getElementById("petals");
     const ctx = cv.getContext("2d");
     let W, H, petals = [];
     function resize() { W = cv.width = innerWidth; H = cv.height = innerHeight; }
     addEventListener("resize", resize); resize();
 
-    const count = innerWidth < 600 ? 22 : 40;      // fewer petals on phones = smoother
+    const count = innerWidth < 600 ? 14 : 36;      // fewer petals on phones = smoother
     function newPetal(top) {
       return {
         x: Math.random() * W, y: top ? -20 : Math.random() * H,
@@ -289,7 +279,7 @@
     }
     draw();
 
-    // 5. Tap or click anywhere: little hearts burst out
+    // 4. Tap or click anywhere: little hearts burst out
     addEventListener("pointerdown", (e) => {
       for (let i = 0; i < 7; i++) {
         const h = document.createElement("span");
