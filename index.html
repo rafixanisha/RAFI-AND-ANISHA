@@ -31,7 +31,6 @@
       overflow-x: hidden;
     }
 
-    /* Falling petals live on this canvas, behind everything */
     #petals { position: fixed; inset: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none; }
     main, footer { position: relative; z-index: 1; }
 
@@ -68,7 +67,6 @@
       animation: fadeUp 1.2s 1.8s forwards;
     }
 
-    /* Photo in an arch frame with a pulsing glow ring */
     .frame {
       position: relative;
       width: min(260px, 70vw);
@@ -125,7 +123,6 @@
       text-shadow: 0 0 14px rgba(233, 194, 123, .5);
     }
 
-    /* Scroll reveal: starts hidden, JS adds .in when it enters the screen */
     .reveal { opacity: 0; transform: translateY(40px) scale(.98); transition: opacity 1s ease, transform 1s cubic-bezier(.2, .8, .2, 1); }
     .reveal.in { opacity: 1; transform: none; }
 
@@ -143,7 +140,6 @@
 
     footer { text-align: center; padding: 3rem 1rem 4rem; font-family: "Great Vibes", cursive; font-size: 2.2rem; color: var(--blush); }
 
-    /* Hearts that burst where you tap */
     .burst { position: fixed; z-index: 5; pointer-events: none; font-size: 1.4rem; animation: burst 1.4s ease-out forwards; }
     @keyframes burst { to { transform: translate(var(--dx), var(--dy)) scale(.4); opacity: 0; } }
 
@@ -158,6 +154,21 @@
       #petals { display: none; }
     }
   </style>
+
+  <script>
+    // Image fix: each <img> starts with the file name exactly as it is in the repo.
+    // If it fails, it tries the alternate name ONCE (data-alt), then shows a heart.
+    // So it works whether the files are named "anu1.png.png" or "anu1.png".
+    function imgFail(img) {
+      if (img.dataset.alt && !img.dataset.tried) {
+        img.dataset.tried = "1";
+        img.src = img.dataset.alt;
+      } else {
+        img.onerror = null;
+        img.outerHTML = img.dataset.hero ? '<div class="ph">💖</div>' : "💗";
+      }
+    }
+  </script>
 </head>
 
 <body>
@@ -169,8 +180,7 @@
       <p class="message">Inshā’Allāh, I will get her as my wife one day</p>
 
       <div class="frame">
-        <!-- Put your picture named love.png next to this file -->
-        <img src="./love.png" alt="Rafi and Anisha" onerror="this.outerHTML='<div class=ph>💖</div>'" />
+        <img src="love.png" data-alt="love.png.png" data-hero="1" alt="Rafi and Anisha" onerror="imgFail(this)" />
       </div>
 
       <span class="hint">scroll down ↓</span>
@@ -200,11 +210,11 @@
 
     <section class="section reveal">
       <h2>Memories Together 📷</h2>
-            <div class="gallery">
-        <div><img src="./anu1.png.png" alt="Anisha" loading="lazy" onerror="this.outerHTML='💗'"></div>
-        <div><img src="./anuxrafu2.png.png" alt="Anisha and Rafi" loading="lazy" onerror="this.outerHTML='💗'"></div>
-        <div><img src="./aru4.png.png" alt="Rafi" loading="lazy" onerror="this.outerHTML='💗'"></div>
-        <div><img src="./anuxaru3.png.png" alt="Anisha and Rafi" loading="lazy" onerror="this.outerHTML='💗'"></div>
+      <div class="gallery">
+        <div><img src="anu1.png.png" data-alt="anu1.png" alt="Anisha" onerror="imgFail(this)"></div>
+        <div><img src="anuxrafu2.png.png" data-alt="anuxrafu2.png" alt="Anisha and Rafi" onerror="imgFail(this)"></div>
+        <div><img src="aru4.png.png" data-alt="aru4.png" alt="Rafi" onerror="imgFail(this)"></div>
+        <div><img src="anuxaru3.png.png" data-alt="anuxaru3.png" alt="Anisha and Rafi" onerror="imgFail(this)"></div>
       </div>
     </section>
 
@@ -218,10 +228,10 @@
   <footer>Forever Yours,<br>Rafi</footer>
 
   <script>
-    // 1. Scroll reveal: add class "in" when a section becomes visible
+    // 1. Scroll reveal
     const io = new IntersectionObserver((entries) => {
       entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); } });
-    }, { threshold: 0.25 });
+    }, { threshold: 0.1 });
     document.querySelectorAll(".reveal").forEach(el => io.observe(el));
 
     // 2. Typewriter for pickup lines
@@ -234,7 +244,7 @@
     const out = document.getElementById("pickupText");
     let li = 0, ci = 0;
     function type() {
-      const line = Array.from(lines[li]);          // Array.from keeps emojis in one piece
+      const line = Array.from(lines[li]);
       if (ci < line.length) {
         out.textContent = line.slice(0, ++ci).join("");
         setTimeout(type, 55);
@@ -244,14 +254,14 @@
     }
     type();
 
-    // 3. Falling petals drawn on a <canvas>
+    // 3. Falling petals
     const cv = document.getElementById("petals");
     const ctx = cv.getContext("2d");
     let W, H, petals = [];
     function resize() { W = cv.width = innerWidth; H = cv.height = innerHeight; }
     addEventListener("resize", resize); resize();
 
-    const count = innerWidth < 600 ? 14 : 36;      // fewer petals on phones = smoother
+    const count = innerWidth < 600 ? 14 : 36;
     function newPetal(top) {
       return {
         x: Math.random() * W, y: top ? -20 : Math.random() * H,
@@ -271,7 +281,7 @@
         ctx.globalAlpha = p.o;
         ctx.fillStyle = "#ff8fb8";
         ctx.beginPath();
-        ctx.ellipse(0, 0, p.s, p.s * .55, 0, 0, 6.28);   // a petal is just a squashed circle
+        ctx.ellipse(0, 0, p.s, p.s * .55, 0, 0, 6.28);
         ctx.fill();
         ctx.restore();
       });
@@ -279,7 +289,7 @@
     }
     draw();
 
-    // 4. Tap or click anywhere: little hearts burst out
+    // 4. Tap/click heart burst
     addEventListener("pointerdown", (e) => {
       for (let i = 0; i < 7; i++) {
         const h = document.createElement("span");
